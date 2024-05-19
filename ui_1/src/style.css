@@ -1,0 +1,17 @@
+body {
+  background-color: #1e1e1e;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.urltext {
+  flex-grow: 1;
+}
+
+.row1 {
+  height: 350px;
+}
