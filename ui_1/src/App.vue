@@ -13,7 +13,9 @@ import {
   vsCodeDataGrid,
   vsCodeTextArea,
   vsCodeDropdown,
-  vsCodeOption
+  vsCodeOption,
+  vsCodeRadio,
+  vsCodeRadioGroup
 } from "@vscode/webview-ui-toolkit";
 provideVSCodeDesignSystem().register(
   vsCodeButton(),
@@ -28,11 +30,16 @@ provideVSCodeDesignSystem().register(
   vsCodeCheckbox(),
   vsCodeTextArea(),
   vsCodeDropdown(),
-  vsCodeOption()
+  vsCodeOption(),
+  vsCodeRadio(),
+  vsCodeRadioGroup()
 );
 
 import {ref,onMounted} from "vue";
 import KeyValue from "./components/KeyValue.vue"
+import JsEdit from "./components/JsEdit.vue"
+import Authorisation from "./components/Authorisation.vue"
+import Body from "./components/Body.vue"
 import Iblize from "iblize";
 
 const preeditor = ref(null);
@@ -73,24 +80,24 @@ onMounted(()=>{
       <vscode-panel-tab id="tab-3">Headers</vscode-panel-tab>
       <vscode-panel-tab id="tab-4">Body</vscode-panel-tab>
       <vscode-panel-tab id="tab-5">
-Pre Script
+        Pre Script
       </vscode-panel-tab>
       <vscode-panel-tab id="tab-6">
-Post Script
+        Post Script
       </vscode-panel-tab>
       <vscode-panel-view id="view-1">
         <KeyValue></KeyValue>
       </vscode-panel-view>
-      <vscode-panel-view id="view-2">Authorisation</vscode-panel-view>
+      <vscode-panel-view id="view-2"><Authorisation></Authorisation></vscode-panel-view>
       <vscode-panel-view id="view-3">
         <KeyValue></KeyValue>
       </vscode-panel-view>
-      <vscode-panel-view id="view-4">Body</vscode-panel-view>
+      <vscode-panel-view id="view-4"><Body></Body></vscode-panel-view>
       <vscode-panel-view id="view-5">
-        <div id="preeditor" ref="preeditor"></div>
+        <JsEdit />
       </vscode-panel-view>
       <vscode-panel-view id="view-6">
-        <div id="posteditor" ref="posteditor"></div>
+        <JsEdit />
       </vscode-panel-view>
     </vscode-panels>
   </div>
