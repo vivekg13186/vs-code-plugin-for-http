@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 import {
   provideVSCodeDesignSystem,
   vsCodeButton,
@@ -35,25 +35,23 @@ provideVSCodeDesignSystem().register(
   vsCodeRadioGroup()
 );
 
-import {ref,onMounted} from "vue";
+import { ref, onMounted } from "vue";
 import KeyValue from "./components/KeyValue.vue"
 import JsEdit from "./components/JsEdit.vue"
 import Authorisation from "./components/Authorisation.vue"
 import Body from "./components/Body.vue"
-import Iblize from "iblize";
 
-const preeditor = ref(null);
-const posteditor = ref(null);
-var preeditor_obj = null;
-var posteditor_obj = null;
-onMounted(()=>{
-  preeditor_obj = new Iblize(preeditor.value, {
-    language: "javascript",
-  });
-  posteditor_obj = new Iblize(posteditor.value, {
-    language: "javascript",
-  });
+const data = ref({ 
+"name": "Hello", 
+"params": [{ name: "action", value: "start" }],
+headers : [{ name: "Application-Type", value: "contern" }],
+auth : [{type: "noauth" ,username: "",password: "" }],
+prescript:[""],
+postscript:[""] ,
+body :[{type:"raw",mimeType:"",text:[""],keyValues:[],filepath:""}]
 })
+
+
 
 </script>
 
@@ -85,31 +83,46 @@ onMounted(()=>{
       <vscode-panel-tab id="tab-6">
         Post Script
       </vscode-panel-tab>
+
       <vscode-panel-view id="view-1">
-        <KeyValue></KeyValue>
+        <KeyValue title="Param" :input="data.params"></KeyValue>
       </vscode-panel-view>
-      <vscode-panel-view id="view-2"><Authorisation></Authorisation></vscode-panel-view>
+      <vscode-panel-view id="view-2">
+        <Authorisation :input="data.auth"></Authorisation>
+      </vscode-panel-view>
       <vscode-panel-view id="view-3">
-        <KeyValue></KeyValue>
+        <KeyValue title="Header" :input="data.headers"></KeyValue>
       </vscode-panel-view>
-      <vscode-panel-view id="view-4"><Body></Body></vscode-panel-view>
+      <vscode-panel-view id="view-4">
+
+        <Body :input="data.body"></Body>
+      </vscode-panel-view>
       <vscode-panel-view id="view-5">
-        <JsEdit />
+        <JsEdit :input="data.prescript" />
       </vscode-panel-view>
       <vscode-panel-view id="view-6">
-        <JsEdit />
+        <JsEdit :input="data.postscript"/>
       </vscode-panel-view>
+
+
     </vscode-panels>
   </div>
-  <vscode-divider></vscode-divider>
-
+  <div>
+    {{ JSON.stringify(data, null, 4) }}
+  </div>
 </template>
 <style scoped>
-#preeditor,#posteditor{
-    width: 100%;
-      height: 350px;
+.row1 {
+  width: 100%;
+  height: 550px;
 
 }
-</style>
 
- 
+vscode-panel-view {
+  margin-top: 5px;
+  border: 1px solid #8888;
+  padding: 10px;
+  border-radius: 4px;
+  min-height: 550px;
+}
+</style>
