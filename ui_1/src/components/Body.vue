@@ -1,5 +1,5 @@
 <template>
-    <div style="min-height: 450px;width: 100%;">
+    <div style="min-height: 280px;width: 100%;">
         <div>
             <div class="options">
                 <vscode-radio-group  >

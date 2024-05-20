@@ -88,10 +88,11 @@ const toogleEdit = () => {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 10px;
+
 }
 
 .editor {
     width: 100%;
-    height: 350px;
+ 
 }
 </style>

@@ -2,16 +2,10 @@ body {
   background-color: #1e1e1e;
 }
 
-.toolbar {
+ 
+
+#app{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
-}
-
-.urltext {
-  flex-grow: 1;
-}
-
-.row1 {
-  height: 350px;
 }

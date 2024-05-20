@@ -41,14 +41,14 @@ import JsEdit from "./components/JsEdit.vue"
 import Authorisation from "./components/Authorisation.vue"
 import Body from "./components/Body.vue"
 
-const data = ref({ 
-"name": "Hello", 
-"params": [{ name: "action", value: "start" }],
-headers : [{ name: "Application-Type", value: "contern" }],
-auth : [{type: "noauth" ,username: "",password: "" }],
-prescript:[""],
-postscript:[""] ,
-body :[{type:"raw",mimeType:"",text:[""],keyValues:[],filepath:""}]
+const data = ref({
+  "name": "Hello",
+  "params": [{ name: "action", value: "start" }],
+  headers: [{ name: "Application-Type", value: "contern" }],
+  auth: [{ type: "noauth", username: "", password: "" }],
+  prescript: [""],
+  postscript: [""],
+  body: [{ type: "raw", mimeType: "", text: [""], keyValues: [], filepath: "" }]
 })
 
 
@@ -77,31 +77,41 @@ body :[{type:"raw",mimeType:"",text:[""],keyValues:[],filepath:""}]
       <vscode-panel-tab id="tab-2">Authorisation</vscode-panel-tab>
       <vscode-panel-tab id="tab-3">Headers</vscode-panel-tab>
       <vscode-panel-tab id="tab-4">Body</vscode-panel-tab>
-      <vscode-panel-tab id="tab-5">
-        Pre Script
-      </vscode-panel-tab>
-      <vscode-panel-tab id="tab-6">
-        Post Script
-      </vscode-panel-tab>
+      <vscode-panel-tab id="tab-5">Pre Script</vscode-panel-tab>
+      <vscode-panel-tab id="tab-6">Post Script</vscode-panel-tab>
 
       <vscode-panel-view id="view-1">
-        <KeyValue title="Param" :input="data.params"></KeyValue>
+        <div class="tab-content">
+          <KeyValue title="Param" :input="data.params"></KeyValue>
+        </div>
+
       </vscode-panel-view>
       <vscode-panel-view id="view-2">
-        <Authorisation :input="data.auth"></Authorisation>
+        <div class="tab-content">
+          <Authorisation :input="data.auth"></Authorisation>
+        </div>
       </vscode-panel-view>
       <vscode-panel-view id="view-3">
-        <KeyValue title="Header" :input="data.headers"></KeyValue>
+        <div class="tab-content">
+          <KeyValue title="Header" :input="data.headers"></KeyValue>
+        </div>
       </vscode-panel-view>
       <vscode-panel-view id="view-4">
 
-        <Body :input="data.body"></Body>
+        <div class="tab-content">
+
+          <Body :input="data.body"></Body>
+        </div>
       </vscode-panel-view>
       <vscode-panel-view id="view-5">
-        <JsEdit :input="data.prescript" />
+        <div class="tab-content">
+          <JsEdit :input="data.prescript" />
+        </div>
       </vscode-panel-view>
       <vscode-panel-view id="view-6">
-        <JsEdit :input="data.postscript"/>
+        <div class="tab-content">
+          <JsEdit :input="data.postscript" />
+        </div>
       </vscode-panel-view>
 
 
@@ -110,19 +120,60 @@ body :[{type:"raw",mimeType:"",text:[""],keyValues:[],filepath:""}]
   <div>
     {{ JSON.stringify(data, null, 4) }}
   </div>
+  <div class="row2">
+    <vscode-panels>
+      <vscode-panel-tab id="tab-1">Body</vscode-panel-tab>
+      <vscode-panel-tab id="tab-2">Cookies</vscode-panel-tab>
+      <vscode-panel-tab id="tab-3">Headers</vscode-panel-tab>
+      <vscode-panel-tab id="tab-4">Result</vscode-panel-tab>
+
+      <vscode-panel-view id="view-1">
+        Body
+      </vscode-panel-view>
+      <vscode-panel-view id="view-2">
+        Cookies
+      </vscode-panel-view>
+      <vscode-panel-view id="view-3">
+        Headers
+      </vscode-panel-view>
+      <vscode-panel-view id="view-4">
+        Result
+
+      </vscode-panel-view>
+
+
+
+    </vscode-panels>
+  </div>
 </template>
 <style scoped>
 .row1 {
   width: 100%;
-  height: 550px;
+
+  
 
 }
 
-vscode-panel-view {
+ 
+
+.tab-content {
+  width: 100%;
   margin-top: 5px;
-  border: 1px solid #8888;
+  height: 300px;
+  min-height: 300px;
   padding: 10px;
   border-radius: 4px;
-  min-height: 550px;
+
+}
+
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.urltext {
+  flex-grow: 1;
 }
 </style>
