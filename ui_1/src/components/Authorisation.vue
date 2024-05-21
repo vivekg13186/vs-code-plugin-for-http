@@ -1,13 +1,15 @@
 <template>
-    <div style="min-height: 350px;">
-        <vscode-dropdown v-model="data[0].type" style="width: 200px;">
+    <div class="root">
+        <div class="panel1"><vscode-dropdown v-model="data[0].type" style="width: 200px;">
             <vscode-option value="noauth">No Auth</vscode-option>
             <vscode-option value="basic">Basic Authentication</vscode-option>
-        </vscode-dropdown>
-        <div v-if="data[0].type =='basic'" class="row">
+        </vscode-dropdown></div>
+        <div class="panel2"  v-if="data[0].type =='basic'"  >  
             <vscode-text-field v-model="data[0].username">User name</vscode-text-field>
             <vscode-text-field v-model="data[0].password">Password</vscode-text-field>
-        </div>
+       </div>
+        
+       
     </div>
 </template>
 <script setup>
@@ -20,10 +22,26 @@ const data = ref(props.input);
  
 </script>
 <style scoped>
-.row{
+.root {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.panel1 {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    padding-right: 10px;
+    gap: 10px;
+    border-right: 1px solid #888;
+}
+
+
+.panel2 {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 20px;
+    flex-grow: 1;
 }
 </style>
