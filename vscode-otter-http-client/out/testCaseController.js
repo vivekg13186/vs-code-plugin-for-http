@@ -85,16 +85,16 @@ function registerAddNewHttpRequest(id, context, tree) {
             method: "",
             params: [],
             headers: [],
-            auth: [],
+            auth: [{ type: "noauth", username: "", password: "" }],
             prescript: [],
             postscript: [],
-            body: {
-                type: "",
-                mimeType: "",
-                test: [],
-                keyValues: [],
-                filepath: ""
-            }
+            body: [{
+                    type: "raw",
+                    mimeType: "",
+                    text: [],
+                    keyValues: [],
+                    filepath: ""
+                }]
         };
         (0, docs_1.putDoc)(name, output);
         vscode_1.default.window.showInformationMessage(`${name} added`);

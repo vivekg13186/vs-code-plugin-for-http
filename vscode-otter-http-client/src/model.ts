@@ -11,7 +11,7 @@ export type OtterHttpAuth = {
 export type OtterHttpBody= {
     type:string,
     mimeType:string,
-    test:string[],
+    text:string[],
     keyValues:OtterNameValue[],
     filepath:string
 };
@@ -24,7 +24,7 @@ export type OtterHttpRequest ={
     auth:OtterHttpAuth[],
     prescript:string[],
     postscript:string[],
-    body:OtterHttpBody
+    body:OtterHttpBody[]
 };
 
 export type OtterHttpResponse ={

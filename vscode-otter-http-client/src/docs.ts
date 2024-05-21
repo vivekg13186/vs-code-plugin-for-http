@@ -1,10 +1,10 @@
 import { Level } from "level";
 import os from "os";
 import path from "path";
-import { ExtensionContext } from "vscode";
+ 
 import { OtterHttpRequest } from "./model";
 
-console.log(path.join(os.homedir(), "vs_otter_http_client"));
+ 
 
 var db: Level | null = null;
 
@@ -35,7 +35,7 @@ export async function getKeys(): Promise<Array<string>> {
             result.push(key);
         }
     }
-    console.log(result)
+ 
     return result;
 }
 

@@ -18,7 +18,6 @@ function registereEditHttpRequest(id, context, treeProvider) {
         var tc = await (0, docs_1.getDoc)(treeItem.label);
         if (!tc)
             return;
-        console.log('tc', tc);
         var panel = vscode_1.default.window.createWebviewPanel("Test Case", treeItem.label, vscode_1.default.ViewColumn.One, {
             enableScripts: true,
             enableFindWidget: true,
@@ -28,13 +27,13 @@ function registereEditHttpRequest(id, context, treeProvider) {
         panel.webview.onDidReceiveMessage(async (message) => {
             switch (message.command) {
                 case "saveTestCase":
-                    console.log('saveing', message.text);
                     (0, docs_1.putDoc)(treeItem.label, JSON.parse(message.text));
                     vscode_1.default.window.showInformationMessage(`${treeItem.label} saved`);
                     return;
                 case "runTestCase":
                     var result = await (0, service_1.runTestCase)(JSON.parse(message.text));
                     if (result) {
+                        console.log("resulkt", result);
                         panel.webview.postMessage(JSON.stringify(result, null, 4));
                     }
                     vscode_1.default.window.showInformationMessage(`${treeItem.label} exected`);

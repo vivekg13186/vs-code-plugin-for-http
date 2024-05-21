@@ -7,7 +7,6 @@ exports.deleteDoc = exports.getKeys = exports.getDoc = exports.putDoc = exports.
 const level_1 = require("level");
 const os_1 = __importDefault(require("os"));
 const path_1 = __importDefault(require("path"));
-console.log(path_1.default.join(os_1.default.homedir(), "vs_otter_http_client"));
 var db = null;
 async function setDatabase() {
     db = new level_1.Level(path_1.default.join(os_1.default.homedir(), "vs_otter_http_client"), {
@@ -39,7 +38,6 @@ async function getKeys() {
             result.push(key);
         }
     }
-    console.log(result);
     return result;
 }
 exports.getKeys = getKeys;

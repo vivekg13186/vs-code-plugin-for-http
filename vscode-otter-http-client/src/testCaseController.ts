@@ -75,16 +75,16 @@ export function registerAddNewHttpRequest(id: string, context: ExtensionContext,
             method: "",
             params: [],
             headers: [],
-            auth: [],
+            auth: [{ type: "noauth", username: "", password: "" }],
             prescript: [],
             postscript: [],
-            body: {
-                type: "",
+            body: [{
+                type: "raw",
                 mimeType: "",
-                test: [],
+                text: [],
                 keyValues: [],
                 filepath: ""
-            }
+            }]
         };
         putDoc(name,  output);
         vscode.window.showInformationMessage(`${name} added`);

@@ -41,22 +41,25 @@ import JsEdit from "./components/JsEdit.vue"
 import Authorisation from "./components/Authorisation.vue"
 import Body from "./components/Body.vue"
 
-const data = ref({
+var value  = window.input ? window.input:{
   "name": "Hello",
+  baseurl: "http://www.google.com",
+  method: "GET",
   "params": [{ name: "action", value: "start" }],
   headers: [{ name: "Application-Type", value: "contern" }],
   auth: [{ type: "noauth", username: "", password: "" }],
   prescript: [""],
   postscript: [""],
   body: [{ type: "raw", mimeType: "", text: [""], keyValues: [], filepath: "" }]
-})
+};
+const data = ref(value)
 
 const output = ref({
-  status: 200,
+  status: "",
   body: "",
   headers: [{ name: "", value: "" }],
   cookies: [{ name: "", value: "" }],
-  result: "adasdasd"
+  result: ""
 })
 
 function runReq() {
@@ -72,20 +75,35 @@ function saveReq() {
   });
 }
 onMounted(() => {
-  if (window.input) {
-    data.value = window.input;
-  }
-  window.addEventListener('message', event => {
-    const message = event.data;
-    output.value = message;
+  /*if (window.input) {
+    data.value.name = window.input.name;
+    data.value.baseurl = window.input.baseurl;
+    data.value.method = window.input.method;
+    
+    
 
+    data.value.params.splice(0,data.value.params.length,...window.input.params);
+    data.value.headers.splice(0,data.value.headers.length,...window.input.headers);
+    data.value.auth.splice(0,data.value.auth.length,...window.input.auth);
+    data.value.prescript.splice(0,data.value.prescript.length,...window.input.prescript);
+    data.value.postscript.splice(0,data.value.postscript.length,...window.input.postscript);
+    data.value.body.splice(0,data.value.body.length,...window.input.body);
+
+
+  }*/
+  window.addEventListener('message', event => {
+    const message =JSON.parse(event.data);
+    console.log('received',message)
+    output.value.body = message.body;
+    output.value.headers.splice(0,output.value.headers,...message.headers);
+    output.value.cookies.splice(0,output.value.cookies,...message.cookies);
   });
 })
 </script>
 
 <template>
   <div class="toolbar">
-    <vscode-dropdown value="GET">
+    <vscode-dropdown value="GET" v-model="data.method">
       <vscode-option>GET</vscode-option>
       <vscode-option>POST</vscode-option>
       <vscode-option>PUT</vscode-option>
@@ -94,7 +112,7 @@ onMounted(() => {
       <vscode-option>HEAD</vscode-option>
       <vscode-option>OPTIONS</vscode-option>
     </vscode-dropdown>
-    <vscode-text-field type="text" ref="host" class="urltext" placeholder="http://www.google.com"></vscode-text-field>
+    <vscode-text-field type="text" v-model="data.baseurl" class="urltext" placeholder="http://www.google.com"></vscode-text-field>
     <vscode-button appearance="primary" @click="runReq">SEND</vscode-button>
     <vscode-button appearance="primary" @click="saveReq">SAVE</vscode-button>
   </div>
@@ -107,7 +125,7 @@ onMounted(() => {
       <vscode-panel-tab id="tab-4">Body</vscode-panel-tab>
       <vscode-panel-tab id="tab-5">Pre Script</vscode-panel-tab>
       <vscode-panel-tab id="tab-6">Post Script</vscode-panel-tab>
-
+      <vscode-panel-tab id="tab-7">Overview</vscode-panel-tab>
       <vscode-panel-view id="view-1">
         <div class="tab-content">
           <KeyValue title="Param" :input="data.params"></KeyValue>
@@ -141,7 +159,11 @@ onMounted(() => {
           <JsEdit :input="data.postscript" />
         </div>
       </vscode-panel-view>
-
+      <vscode-panel-view id="view-7">
+        <div class="tab-content">
+          {{ JSON.stringify(data) }}
+        </div>
+      </vscode-panel-view>
 
     </vscode-panels>
   </div>

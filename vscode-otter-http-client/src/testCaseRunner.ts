@@ -18,7 +18,7 @@ export function registereEditHttpRequest  (id:string, context:ExtensionContext, 
     var tc = await getDoc(treeItem.label) ;
     if (!tc) return;
 
-    console.log('tc',tc);
+ 
 
     var panel:WebviewPanel = vscode.window.createWebviewPanel(
       "Test Case",
@@ -36,13 +36,13 @@ export function registereEditHttpRequest  (id:string, context:ExtensionContext, 
       async (message) => {
         switch (message.command) {
           case "saveTestCase":
-            console.log('saveing',message.text)
             putDoc(treeItem.label, JSON.parse(message.text));
             vscode.window.showInformationMessage(`${treeItem.label} saved`);
             return;
           case "runTestCase":
             var result  = await runTestCase(JSON.parse(message.text));
             if(result){
+              console.log("resulkt",result)
               panel.webview.postMessage(JSON.stringify(result,null,4));
             }
             vscode.window.showInformationMessage(`${treeItem.label} exected`);
