@@ -51,8 +51,36 @@ const data = ref({
   body: [{ type: "raw", mimeType: "", text: [""], keyValues: [], filepath: "" }]
 })
 
+const output = ref({
+  status: 200,
+  body: "",
+  headers: [{ name: "", value: "" }],
+  cookies: [{ name: "", value: "" }],
+  result: "adasdasd"
+})
 
+function runReq() {
+  vscode.postMessage({
+    command: 'runTestCase',
+    text: JSON.stringify(data.value)
+  });
+}
+function saveReq() {
+  vscode.postMessage({
+    command: 'saveTestCase',
+    text: JSON.stringify(data.value)
+  });
+}
+onMounted(() => {
+  if (window.input) {
+    data.value = window.input;
+  }
+  window.addEventListener('message', event => {
+    const message = event.data;
+    output.value = message;
 
+  });
+})
 </script>
 
 <template>
@@ -67,8 +95,8 @@ const data = ref({
       <vscode-option>OPTIONS</vscode-option>
     </vscode-dropdown>
     <vscode-text-field type="text" ref="host" class="urltext" placeholder="http://www.google.com"></vscode-text-field>
-    <vscode-button appearance="primary">SEND</vscode-button>
-    <vscode-button appearance="primary">SAVE</vscode-button>
+    <vscode-button appearance="primary" @click="runReq">SEND</vscode-button>
+    <vscode-button appearance="primary" @click="saveReq">SAVE</vscode-button>
   </div>
 
   <div class="row1">
@@ -117,9 +145,7 @@ const data = ref({
 
     </vscode-panels>
   </div>
-  <div>
-    {{ JSON.stringify(data, null, 4) }}
-  </div>
+
   <div class="row2">
     <vscode-panels>
       <vscode-panel-tab id="tab-1">Body</vscode-panel-tab>
@@ -128,16 +154,35 @@ const data = ref({
       <vscode-panel-tab id="tab-4">Result</vscode-panel-tab>
 
       <vscode-panel-view id="view-1">
-        Body
+        <vscode-textarea readonly>{{ output.body }}</vscode-textarea>
       </vscode-panel-view>
       <vscode-panel-view id="view-2">
-        Cookies
+        <vscode-data-grid aria-label="Basic">
+          <vscode-data-grid-row row-type="header">
+            <vscode-data-grid-cell cell-type="columnheader" grid-column="1">Cookie</vscode-data-grid-cell>
+            <vscode-data-grid-cell cell-type="columnheader" grid-column="2">Value</vscode-data-grid-cell>
+          </vscode-data-grid-row>
+          <vscode-data-grid-row v-for="item in output.cookies" v-bind:key="item.name">
+            <vscode-data-grid-cell grid-column="1">{{ item.name }}</vscode-data-grid-cell>
+            <vscode-data-grid-cell grid-column="2">{{ item.value }}</vscode-data-grid-cell>
+          </vscode-data-grid-row>
+        </vscode-data-grid>
       </vscode-panel-view>
       <vscode-panel-view id="view-3">
-        Headers
+        <vscode-data-grid aria-label="Basic">
+          <vscode-data-grid-row row-type="header">
+            <vscode-data-grid-cell cell-type="columnheader" grid-column="1">Headers</vscode-data-grid-cell>
+            <vscode-data-grid-cell cell-type="columnheader" grid-column="2">Value</vscode-data-grid-cell>
+          </vscode-data-grid-row>
+          <vscode-data-grid-row v-for="item in output.headers" v-bind:key="item.name">
+            <vscode-data-grid-cell grid-column="1">{{ item.name }}</vscode-data-grid-cell>
+            <vscode-data-grid-cell grid-column="2">{{ item.value }}</vscode-data-grid-cell>
+          </vscode-data-grid-row>
+        </vscode-data-grid>
       </vscode-panel-view>
+
       <vscode-panel-view id="view-4">
-        Result
+        <vscode-textarea readonly>{{ output.result }}</vscode-textarea>
 
       </vscode-panel-view>
 
@@ -149,12 +194,7 @@ const data = ref({
 <style scoped>
 .row1 {
   width: 100%;
-
-  
-
 }
-
- 
 
 .tab-content {
   width: 100%;
@@ -165,7 +205,6 @@ const data = ref({
   border-radius: 4px;
 
 }
-
 
 .toolbar {
   display: flex;

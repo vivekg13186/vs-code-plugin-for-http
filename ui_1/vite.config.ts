@@ -20,4 +20,18 @@ export default defineConfig({
       }
     }
   })],
+  build: {
+    rollupOptions: {
+
+      input: {
+        "testcase": "./src/main.js"
+      },
+      output: {
+        dir: "../vscode-otter-http-client/media/",
+        entryFileNames: 'entry-[name].js',
+        chunkFileNames: `[name].js`,
+        assetFileNames: `[name].[ext]`
+      }
+    }
+  }
 })

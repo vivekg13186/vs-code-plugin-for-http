@@ -1,0 +1,124 @@
+{
+  "name": "vscode-otter-http-client",
+  "displayName": "vscode-otter-http-client",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "otter.http.tree.reload",
+        "title": "Refresh",
+        "icon": {
+          "light": "media/light/refresh.svg",
+          "dark": "media/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "otter.http.new.testcase",
+        "title": "Add new testcase",
+        "category": "HTTP Client",
+        "icon": {
+          "light": "media/light/plus.svg",
+          "dark": "media/dark/plus.svg"
+        }
+      },
+      {
+        "command": "otter.http.delete.testcase",
+        "title": "Remove testcase",
+        "category": "HTTP Client",
+        "icon": {
+          "light": "media/light/trash.svg",
+          "dark": "media/dark/trash.svg"
+        }
+      },
+      {
+        "command": "otter.http.edit.testcase",
+        "title": "Edit testcase",
+        "category": "HTTP Client",
+        "icon": {
+          "light": "media/light/edit.svg",
+          "dark": "media/dark/edit.svg"
+        }
+      }
+    ],
+    "views": {
+      "httpexplorer": [
+        {
+          "id": "httpexplorer",
+          "name": "HTTP request",
+          "contextualTitle": "Test Scripts"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "httpexplorer",
+          "icon": "media/dark/otter.svg",
+          "title": "HTTP Request Explorer"
+        }
+      ]
+    }
+    ,"menus": {
+      "view/title": [
+      
+      
+        {
+          "command": "otter.http.new.testcase",
+          "when": "view == httpexplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "otter.http.tree.reload",
+          "when": "view == httpexplorer",
+          "group": "navigation"
+        } 
+       
+      ],"view/item/context": [
+        {
+          "command": "otter.http.delete.testcase",
+          "when": "view == httpexplorer && viewItem == httprequest"
+        },
+        {
+          "command": "otter.http.edit.testcase",
+          "when": "view == httpexplorer && viewItem == httprequest"
+          
+        }
+      ]
+    }
+    
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.89.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "@vscode/test-cli": "^0.0.6",
+    "@vscode/test-electron": "^2.3.9",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "level": "^8.0.1"
+  }
+}
