@@ -16,7 +16,7 @@ async function execute(httpRequest: OtterHttpRequest): Promise<OtterHttpResponse
 export function registereEditHttpRequest(id: string, context: ExtensionContext, treeProvider: OtterHttpTreeProvider) {
   var plugin = vscode.commands.registerCommand(id, async function (treeItem) {
     var tc = await getDoc(treeItem.label);
-    if (!tc) return;
+    if (!tc){return;} 
 
 
 
@@ -42,10 +42,8 @@ export function registereEditHttpRequest(id: string, context: ExtensionContext, 
           case "runTestCase":
             var result = await runTestCase(JSON.parse(message.text));
             if (result) {
-              console.log("resulkt", result)
               panel.webview.postMessage(JSON.stringify(result, null, 4));
             }
-            vscode.window.showInformationMessage(`${treeItem.label} exected`);
             return;
         }
       },

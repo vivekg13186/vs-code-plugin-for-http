@@ -5,12 +5,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.runTestCase = void 0;
 const axios_1 = __importDefault(require("axios"));
+const coffeescript_1 = __importDefault(require("coffeescript"));
 function nvtoObj(nvs) {
     var obj = {};
     for (var i = 0; i < nvs.length; i++) {
         obj[nvs[i].name] = nvs[i].value;
     }
     return obj;
+}
+function eval_js(code, requestInput, responseInput) {
+    var updated_code = "";
+    if (requestInput) {
+        updated_code += `request=${JSON.stringify(requestInput)}\n\n`;
+    }
+    if (responseInput) {
+        updated_code += `response=${JSON.stringify(responseInput)}\n\n`;
+    }
+    updated_code += code;
+    console.log('JS code', updated_code);
+    try {
+        var result = coffeescript_1.default.run(updated_code);
+        console.log("result", result);
+        return result;
+    }
+    catch (e) {
+        return String(e);
+    }
 }
 function toNv(headers) {
     var result = [];
@@ -21,6 +41,10 @@ function toNv(headers) {
     return result;
 }
 async function runTestCase(input) {
+    /*
+     if(input.prescript && input.prescript.length>0){
+         eval_js(input.prescript[0],input,null);
+     }*/
     var config = {};
     config.method = input.method;
     config.baseURL = input.baseurl;
@@ -45,6 +69,9 @@ async function runTestCase(input) {
         output.status = result.statusText;
         output.body = result.data;
         output.headers = toNv(result.headers);
+        /*if(input.postscript && input.postscript.length>0){
+            eval_js(input.prescript[0],input,null);
+        }*/
     }
     catch (e) {
         output.status = "Client Error";

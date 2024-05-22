@@ -68,11 +68,9 @@
           "title": "HTTP Request Explorer"
         }
       ]
-    }
-    ,"menus": {
+    },
+    "menus": {
       "view/title": [
-      
-      
         {
           "command": "otter.http.new.testcase",
           "when": "view == httpexplorer",
@@ -82,9 +80,9 @@
           "command": "otter.http.tree.reload",
           "when": "view == httpexplorer",
           "group": "navigation"
-        } 
-       
-      ],"view/item/context": [
+        }
+      ],
+      "view/item/context": [
         {
           "command": "otter.http.delete.testcase",
           "when": "view == httpexplorer && viewItem == httprequest"
@@ -92,11 +90,9 @@
         {
           "command": "otter.http.edit.testcase",
           "when": "view == httpexplorer && viewItem == httprequest"
-          
         }
       ]
     }
-    
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -107,6 +103,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
+    "@types/coffeescript": "^2.5.7",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
     "@types/vscode": "^1.89.0",
@@ -119,6 +116,7 @@
   },
   "dependencies": {
     "axios": "^1.7.2",
+    "coffeescript": "^2.7.0",
     "level": "^8.0.1"
   }
 }

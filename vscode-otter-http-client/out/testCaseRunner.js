@@ -16,8 +16,9 @@ async function execute(httpRequest) {
 function registereEditHttpRequest(id, context, treeProvider) {
     var plugin = vscode_1.default.commands.registerCommand(id, async function (treeItem) {
         var tc = await (0, docs_1.getDoc)(treeItem.label);
-        if (!tc)
+        if (!tc) {
             return;
+        }
         var panel = vscode_1.default.window.createWebviewPanel("Test Case", treeItem.label, vscode_1.default.ViewColumn.One, {
             enableScripts: true,
             enableFindWidget: true,
@@ -33,10 +34,8 @@ function registereEditHttpRequest(id, context, treeProvider) {
                 case "runTestCase":
                     var result = await (0, service_1.runTestCase)(JSON.parse(message.text));
                     if (result) {
-                        console.log("resulkt", result);
                         panel.webview.postMessage(JSON.stringify(result, null, 4));
                     }
-                    vscode_1.default.window.showInformationMessage(`${treeItem.label} exected`);
                     return;
             }
         }, undefined, context.subscriptions);
@@ -50,19 +49,9 @@ function generateHTML(panel, context, input) {
         "media",
         "entry-testcase.js",
     ]);
-    var collapse_css = getUri(panel.webview, context.extensionUri, [
-        "media",
-        "_plugin-vue_export-helper.css",
-    ]);
     var app_css = getUri(panel.webview, context.extensionUri, [
         "media",
         "testcase.css",
-    ]);
-    var icon_css = getUri(panel.webview, context.extensionUri, [
-        "node_modules",
-        "@vscode/codicons",
-        "dist",
-        "codicon.css",
     ]);
     return `
     <!doctype  html>
@@ -72,8 +61,7 @@ function generateHTML(panel, context, input) {
         <meta http-equiv="X-UA-Compatible" content="IE-edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title></title>
-        <link href="${collapse_css}" rel="stylesheet">
-        <link href="${icon_css}" rel="stylesheet">
+       
           <link href="${app_css}" rel="stylesheet">
         
        
