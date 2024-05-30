@@ -2,8 +2,9 @@
   "name": "vscode-otter-http-client",
   "displayName": "vscode-otter-http-client",
   "description": "",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "vivekopd",
+  "icon": "media/otter.png",
   "repository": {
     "url": "https://github.com/vivekg13186/vs-code-plugin-for-http"
   },
