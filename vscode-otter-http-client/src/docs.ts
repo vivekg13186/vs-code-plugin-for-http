@@ -1,47 +1,46 @@
 import { Level } from "level";
-import os from "os";
-import path from "path";
- 
+
+
 import { OtterHttpRequest } from "./model";
-
+import { ExtensionContext, FileType, Uri } from "vscode";
+import vscode from "vscode";
  
-
 var db: Level | null = null;
 
-export async function setDatabase() {
-    db = new Level(path.join(os.homedir(), "vs_otter_http_client"), {
-        valueEncoding: "json",
-    });
+var encoder = new TextEncoder();
+var decoder  = new TextDecoder();
+var baseUri:Uri;
+
+ 
+export async function setDatabase(context: ExtensionContext) {
+    baseUri = context.globalStorageUri;
+     
 }
 
-export function putDoc(key: string, data: OtterHttpRequest) {
-    if (db) {
-        db.put(key, JSON.stringify(data));
-    }
+export async function putDoc(key: string, data: OtterHttpRequest) {
+    
+    var p = Uri.joinPath(baseUri,key);
+    await vscode.workspace.fs.writeFile(p,encoder.encode(JSON.stringify(data)));
+ 
 }
 
 export async function getDoc(key: string): Promise<OtterHttpRequest | undefined> {
-    if (db) {
-        var data = await db.get(key);
-        if (data) { return JSON.parse(data); }
-    }
-    return undefined;
+    var p = Uri.joinPath(baseUri,key);
+    var text = await vscode.workspace.fs.readFile(p);
+    return JSON.parse(decoder.decode(text));
 };
 
 export async function getKeys(): Promise<Array<string>> {
-    var result = [];
-    if (db) {
-        for await (const key of db.keys()) {
-            result.push(key);
-        }
-    }
- 
-    return result;
+   var file:[string, FileType][]  =await  vscode.workspace.fs.readDirectory(baseUri);
+   var result = [];
+   for(var i=0;i<file.length;i++){
+    result.push(file[i][0]);
+   }
+   return result;
+
 }
 
 export async function deleteDoc(name: string) {
-    if (db) {
-        await db.del(name);
-    }
-
+    var p = Uri.joinPath(baseUri,name);
+    var text = await vscode.workspace.fs.delete(p);
 };

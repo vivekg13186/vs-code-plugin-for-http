@@ -46,7 +46,9 @@ export class OtterHttpTreeProvider implements TreeDataProvider<HttpRequestNode> 
     async getChildren(element?: HttpRequestNode): Promise<HttpRequestNode[] | null | undefined> {
         if (element === undefined) {
             var result: HttpRequestNode[] = [];
+            console.log("sdfsdf");
             var keys = await getKeys();
+            console.log(keys);
             for (var i = 0; i < keys.length; i++) {
                 var c = keys[i];
                 this.httpRequests.push(c);

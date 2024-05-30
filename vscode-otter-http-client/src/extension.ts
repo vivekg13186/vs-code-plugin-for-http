@@ -5,7 +5,7 @@ import { registereEditHttpRequest } from './testCaseRunner';
 import { setDatabase } from './docs';
 
 export function activate(context: vscode.ExtensionContext) {
-	setDatabase();
+	setDatabase(context);
 	var treeProvider: any = new OtterHttpTreeProvider(context);
 
 	context.subscriptions.push(vscode.window.createTreeView('httpexplorer', {

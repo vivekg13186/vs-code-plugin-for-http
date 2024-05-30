@@ -75,22 +75,7 @@ function saveReq() {
   });
 }
 onMounted(() => {
-  /*if (window.input) {
-    data.value.name = window.input.name;
-    data.value.baseurl = window.input.baseurl;
-    data.value.method = window.input.method;
-    
-    
 
-    data.value.params.splice(0,data.value.params.length,...window.input.params);
-    data.value.headers.splice(0,data.value.headers.length,...window.input.headers);
-    data.value.auth.splice(0,data.value.auth.length,...window.input.auth);
-    data.value.prescript.splice(0,data.value.prescript.length,...window.input.prescript);
-    data.value.postscript.splice(0,data.value.postscript.length,...window.input.postscript);
-    data.value.body.splice(0,data.value.body.length,...window.input.body);
-
-
-  }*/
   window.addEventListener('message', event => {
     const message =JSON.parse(event.data);
     console.log('received',message)
@@ -123,8 +108,7 @@ onMounted(() => {
       <vscode-panel-tab id="tab-2">Authorisation</vscode-panel-tab>
       <vscode-panel-tab id="tab-3">Headers</vscode-panel-tab>
       <vscode-panel-tab id="tab-4">Body</vscode-panel-tab>
-      <vscode-panel-tab id="tab-5">Pre Script</vscode-panel-tab>
-      <vscode-panel-tab id="tab-6">Post Script</vscode-panel-tab>
+    
       <vscode-panel-tab id="tab-7">Overview</vscode-panel-tab>
       <vscode-panel-view id="view-1">
         <div class="tab-content">
@@ -149,16 +133,7 @@ onMounted(() => {
           <Body :input="data.body"></Body>
         </div>
       </vscode-panel-view>
-      <vscode-panel-view id="view-5">
-        <div class="tab-content">
-          <JsEdit :input="data.prescript" />
-        </div>
-      </vscode-panel-view>
-      <vscode-panel-view id="view-6">
-        <div class="tab-content">
-          <JsEdit :input="data.postscript" />
-        </div>
-      </vscode-panel-view>
+      
       <vscode-panel-view id="view-7">
         <div class="tab-content">
           {{ JSON.stringify(data) }}
