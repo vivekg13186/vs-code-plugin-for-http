@@ -2,7 +2,7 @@
   "name": "vscode-otter-http-client",
   "displayName": "Otter HTTP Client",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "vivekopd",
   "icon": "media/otter.png",
   "repository": {
